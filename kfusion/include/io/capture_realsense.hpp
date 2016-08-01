@@ -28,11 +28,11 @@ namespace kfusion
         bool grab(cv::Mat &depth, cv::Mat &image);
 
         //parameters taken from camera/oni
-        //int shadow_value, no_sample_value;
-        //float depth_focal_length_VGA;
-        //float baseline;               // mm
-        //double pixelSize;             // mm
-        //unsigned short max_depth;     // mm
+        int shadow_value, no_sample_value;
+        float depth_focal_length_VGA;
+        float baseline;               // mm
+        double pixelSize;             // mm
+        unsigned short max_depth;     // mm
 
         bool setRegistration (bool value = false);
     private:

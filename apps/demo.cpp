@@ -3,7 +3,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/viz/vizcore.hpp>
 #include <kfusion/kinfu.hpp>
-#include <io/capture.hpp>
+//#include <io/capture.hpp>
+#include <io/capture_realsense.hpp>
 
 using namespace kfusion;
 
@@ -23,12 +24,12 @@ struct KinFuApp
             kinfu.iteractive_mode_ = !kinfu.iteractive_mode_;
     }
 
-    KinFuApp(OpenNISource& source) : exit_ (false),  iteractive_mode_(false), capture_ (source), pause_(false)
+    KinFuApp(RealsenseSource& source) : exit_ (false),  iteractive_mode_(false), capture_ (source), pause_(false)
     {
         KinFuParams params = KinFuParams::default_params();
         kinfu_ = KinFu::Ptr( new KinFu(params) );
 
-        capture_.setRegistration(true);
+        //capture_.setRegistration(true);
 
         cv::viz::WCube cube(cv::Vec3d::all(0), cv::Vec3d(params.volume_size), true, cv::viz::Color::apricot());
         viz.showWidget("cube", cube, params.volume_pose);
@@ -113,7 +114,7 @@ struct KinFuApp
 
     bool pause_ /*= false*/;
     bool exit_, iteractive_mode_;
-    OpenNISource& capture_;
+    RealsenseSource& capture_;
     KinFu::Ptr kinfu_;
     cv::viz::Viz3d viz;
 
@@ -135,7 +136,7 @@ int main (int argc, char* argv[])
     if(cuda::checkIfPreFermiGPU(device))
         return std::cout << std::endl << "Kinfu is not supported for pre-Fermi GPU architectures, and not built for them by default. Exiting..." << std::endl, 1;
 
-    OpenNISource capture;
+    RealsenseSource capture;
     capture.open (0);
     //capture.open("d:/onis/20111013-224932.oni");
     //capture.open("d:/onis/reg20111229-180846.oni");
