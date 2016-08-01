@@ -14,15 +14,15 @@ namespace kfusion
         {
             enum
             {
-                CTA_SIZE_X = 32,
-                CTA_SIZE_Y = 8,
+                CTA_SIZE_X = 64,
+                CTA_SIZE_Y = 16,
                 CTA_SIZE = CTA_SIZE_X * CTA_SIZE_Y,
 
                 B = 6, COLS = 6, ROWS = 6, DIAG = 6,
                 UPPER_DIAG_MAT = (COLS * ROWS - DIAG) / 2 + DIAG,
                 TOTAL = UPPER_DIAG_MAT + B,
 
-                FINAL_REDUCE_CTA_SIZE = 256,
+                FINAL_REDUCE_CTA_SIZE = 1024,
                 FINAL_REDUCE_STRIDE = FINAL_REDUCE_CTA_SIZE
             };
         };

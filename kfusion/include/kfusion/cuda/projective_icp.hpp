@@ -9,7 +9,7 @@ namespace kfusion
         class ProjectiveICP
         {
         public:
-            enum { MAX_PYRAMID_LEVELS = 4 };
+            enum { MAX_PYRAMID_LEVELS = 6 };
 
             typedef std::vector<Depth> DepthPyr;
             typedef std::vector<Cloud> PointsPyr;

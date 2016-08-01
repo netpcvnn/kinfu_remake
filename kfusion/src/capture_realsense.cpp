@@ -77,10 +77,11 @@ void kfusion::RealsenseSource::open(int device){
 	// Configure depth to run at VGA resolution at 30 frames per second
 	impl_->dev->enable_stream(rs::stream::depth, 640, 480, rs::format::z16, 60);
 	//impl_->dev->enable_stream(rs::stream::color, 640, 480, rs::format::z16, 60);
-	//dev.enable_stream(rs::stream::depth, rs::preset::best_quality);
+	//impl_->dev->enable_stream(rs::stream::depth, rs::preset::best_quality);
 	impl_->dev->enable_stream(rs::stream::color, rs::preset::best_quality);
 	impl_->dev->start();
-	//impl_->one_meter = static_cast<uint16_t>(1.0f / impl_->dev->get_depth_scale());
+	impl_->one_meter = static_cast<uint16_t>(1.0f / impl_->dev->get_depth_scale());
+	printf("Scale: %f \n", impl_->one_meter);
 }
 void kfusion::RealsenseSource::release(){
 	//impl_->release();
@@ -91,7 +92,10 @@ bool kfusion::RealsenseSource::grab(cv::Mat &depth, cv::Mat &image){
 	const uint8_t * color_frame = reinterpret_cast<const uint8_t *>(impl_->dev->get_frame_data(rs::stream::color));
 	int x_depth = impl_->dev->get_stream_width(rs::stream::depth);
 	int y_depth = impl_->dev->get_stream_height(rs::stream::depth);
-	cv::Mat(y_depth, x_depth, CV_16U, (void*)depth_frame).copyTo(depth);
+	cv::Mat original_depth;
+	cv::Mat(y_depth, x_depth, CV_16U, (void*)depth_frame).copyTo(original_depth);
+	depth = original_depth/10;// / impl_->one_meter;
+	
 	//cv::imshow(depth);
 	return 1;
 }

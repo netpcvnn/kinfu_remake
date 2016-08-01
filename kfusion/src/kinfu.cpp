@@ -4,7 +4,7 @@
 using namespace std;
 using namespace kfusion;
 using namespace kfusion::cuda;
-
+//#define USE_DEPTH
 static inline float deg2rad (float alpha) { return alpha * 0.017453293f; }
 
 kfusion::KinFuParams kfusion::KinFuParams::default_params()
@@ -24,7 +24,7 @@ kfusion::KinFuParams kfusion::KinFuParams::default_params()
 
     p.bilateral_sigma_depth = 0.04f;  //meter
     p.bilateral_sigma_spatial = 4.5; //pixels
-    p.bilateral_kernel_size = 7;     //pixels
+    p.bilateral_kernel_size = 5;     //pixels
 
     p.icp_truncate_depth_dist = 0.f;        //meters, disabled
     p.icp_dist_thres = 0.1f;                //meters
@@ -33,7 +33,7 @@ kfusion::KinFuParams kfusion::KinFuParams::default_params()
 
     p.tsdf_min_camera_movement = 0.f; //meters, disabled
     p.tsdf_trunc_dist = 0.04f; //meters;
-    p.tsdf_max_weight = 64;   //frames
+    p.tsdf_max_weight = 512;   //frames
 
     p.raycast_step_factor = 0.75f;  //in voxel sizes
     p.gradient_delta_factor = 0.5f; //in voxel sizes
